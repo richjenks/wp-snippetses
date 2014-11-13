@@ -1,20 +1,14 @@
 <?php
 
 /**
- * VariablesPostType
+ * PostType
  *
  * Custom Post Type for variables
  */
 
 namespace RichJenks\WPVariables;
 
-class VariablesPostType {
-
-	/**
-	 * @var string Post Type
-	 */
-
-	private $post_type = 'rj_variables';
+class PostType extends Plugin {
 
 	/**
 	 * __construct
@@ -28,7 +22,7 @@ class VariablesPostType {
 		add_action( 'init', function() {
 
 			// Register post type
-			register_post_type( $this->post_type, $this->get_args() );
+			register_post_type( $this->prefix, $this->get_args() );
 
 		} );
 
@@ -96,4 +90,4 @@ class VariablesPostType {
 
 }
 
-new VariablesPostType;
+new PostType;

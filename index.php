@@ -10,5 +10,6 @@
  * License: GPL2
  */
 
-require 'inc/VariablesPostType.php';
-require 'inc/VariableShortcode.php';
+require 'inc/Plugin.php';
+require 'inc/PostType.php';
+require 'inc/Shortcode.php';
