@@ -56,9 +56,9 @@ class PostType extends Plugin {
 			'rewrite'            => false,
 			'capability_type'    => 'post',
 			'has_archive'        => false,
-			'hierarchical'       => false,
+			'hierarchical'       => true,
 			'menu_position'      => null,
-			'supports'           => array( 'title', 'editor' ),
+			'supports'           => array( 'title', 'editor', 'page-attributes' ),
 		);
 	}
 
@@ -82,6 +82,7 @@ class PostType extends Plugin {
 			'edit_item'          => __( 'Edit Variable', $text_domain ),
 			'view_item'          => __( 'View Variable', $text_domain ),
 			'search_items'       => __( 'Search Variables', $text_domain ),
+			'parent'             => __( 'Parent Variable', $text_domain ),
 			'parent_item_colon'  => __( 'Parent Variable:', $text_domain ),
 			'not_found'          => __( 'No Variables found.', $text_domain ),
 			'not_found_in_trash' => __( 'No Variables found in Trash.', $text_domain ),
