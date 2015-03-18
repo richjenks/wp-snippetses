@@ -6,9 +6,11 @@
  * Shortcode for variables
  */
 
-namespace RichJenks\WPVariables;
+namespace RichJenks\WPTemplates;
 
-class Shortcode extends Plugin {
+class Shortcode {
+
+	use Plugin;
 
 	/**
 	 * __construct
@@ -20,7 +22,7 @@ class Shortcode extends Plugin {
 
 		// Register shortcode
 		add_action( 'init', function() {
-			add_shortcode( 'variable', array( $this, 'shortcode' ) );
+			add_shortcode( 'template', array( $this, 'shortcode' ) );
 		} );
 
 	}
@@ -31,31 +33,26 @@ class Shortcode extends Plugin {
 	 * Outputs content for shortcode
 	 */
 
-	public function shortcode( $atts, $content = false ) {
+	public function shortcode( $atts = array(), $content = false ) {
 
 		global $wpdb;
 
-		// If post not specified by title, return false
-		if ( !isset( $atts['var'] ) ) return false;
+		// If neither id nor title set, do nothing
+		if ( empty( $atts['id'] ) && empty( $atts['title'] ) ) return false;
 
-		// Get post content
-		$content = $wpdb->get_var( $wpdb->prepare(
-			"SELECT post_content FROM $wpdb->posts WHERE post_title = %s AND post_type = %s AND post_status = 'publish'" , array(
-				$atts['var'],
-				$this->prefix,
-			)
-		) );
+		// Prepare array for query
+		$atts = array_merge( array(
+			'id'    => '',
+			'title' => '',
+		), $atts );
 
-		// Inject variables from shortcode (shortcode takes priority)
-		foreach ( $atts as $key => $value ) {
-			$content = str_replace( '[' . $key . ']', $value, $content );
-		}
+		// Get content
+		$query = "SELECT post_content FROM $wpdb->posts WHERE ( ID = %d OR post_title = %s ) AND post_type = %s AND post_status = 'publish'";
+		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], $this->post_type );
+		$content = $wpdb->get_var( $prepared );
 
-		// Inject variables from query string
-		parse_str( $_SERVER['QUERY_STRING'], $query );
-		foreach ( $query as $key => $value ) {
-			$content = str_replace( '[' . substr( $key, 1 ) . ']', $value, $content );
-		}
+		// Inject variables from shortcode
+		foreach ( $atts as $key => $value ) $content = str_replace( '[' . $key . ']', $value, $content );
 
 		// Make shortcodes work
 		return do_shortcode( $content );

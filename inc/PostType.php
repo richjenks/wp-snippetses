@@ -3,12 +3,14 @@
 /**
  * PostType
  *
- * Custom Post Type for variables
+ * Custom Post Type for Templates
  */
 
-namespace RichJenks\WPVariables;
+namespace RichJenks\WPTemplates;
 
-class PostType extends Plugin {
+class PostType {
+
+	use Plugin;
 
 	/**
 	 * __construct
@@ -18,22 +20,15 @@ class PostType extends Plugin {
 
 	public function __construct() {
 
-		// Init Actions
+		// Register post type
 		add_action( 'init', function() {
-
-			// Register post type
-			register_post_type( $this->prefix, $this->get_args() );
-
+			register_post_type( $this->post_type, $this->get_args() );
 		} );
 
-		// Post Save Filter
+		// Trim Title
 		add_filter( 'wp_insert_post_data', function( $data , $postarr ) {
-
-			// Trim Title
 			$data['post_title'] = trim( $data['post_title'] );
-
 			return $data;
-
 		}, 99, 2 );
 
 	}
@@ -69,23 +64,23 @@ class PostType extends Plugin {
 	 */
 
 	private function get_labels() {
-		$text_domain = 'richjenks_wpvariables';
+		$text_domain = 'richjenks_templates';
 		return array(
-			'name'               => _x( 'Variables', 'post type general name', $text_domain ),
-			'singular_name'      => _x( 'Variable', 'post type singular name', $text_domain ),
-			'menu_name'          => _x( 'Variables', 'admin menu', $text_domain ),
-			'name_admin_bar'     => _x( 'Variable', 'add new on admin bar', $text_domain ),
-			'add_new'            => _x( 'Add New', 'Variable', $text_domain ),
-			'all_items'          => __( 'All Variables', $text_domain ),
-			'add_new_item'       => __( 'Add Variable', $text_domain ),
-			'new_item'           => __( 'New Variable', $text_domain ),
-			'edit_item'          => __( 'Edit Variable', $text_domain ),
-			'view_item'          => __( 'View Variable', $text_domain ),
-			'search_items'       => __( 'Search Variables', $text_domain ),
-			'parent'             => __( 'Parent Variable', $text_domain ),
-			'parent_item_colon'  => __( 'Parent Variable:', $text_domain ),
-			'not_found'          => __( 'No Variables found.', $text_domain ),
-			'not_found_in_trash' => __( 'No Variables found in Trash.', $text_domain ),
+			'name'               => _x( 'Templates', 'post type general name', $text_domain ),
+			'singular_name'      => _x( 'Template', 'post type singular name', $text_domain ),
+			'menu_name'          => _x( 'Templates', 'admin menu', $text_domain ),
+			'name_admin_bar'     => _x( 'Template', 'add new on admin bar', $text_domain ),
+			'add_new'            => _x( 'Add New', 'Template', $text_domain ),
+			'all_items'          => __( 'All Templates', $text_domain ),
+			'add_new_item'       => __( 'Add Template', $text_domain ),
+			'new_item'           => __( 'New Template', $text_domain ),
+			'edit_item'          => __( 'Edit Template', $text_domain ),
+			'view_item'          => __( 'View Template', $text_domain ),
+			'search_items'       => __( 'Search Templates', $text_domain ),
+			'parent'             => __( 'Parent Template', $text_domain ),
+			'parent_item_colon'  => __( 'Parent Template:', $text_domain ),
+			'not_found'          => __( 'No Templates found.', $text_domain ),
+			'not_found_in_trash' => __( 'No Templates found in Trash.', $text_domain ),
 		);
 	}
 

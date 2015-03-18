@@ -6,14 +6,14 @@
  * Object for whole plugin which other classes extend
  */
 
-namespace RichJenks\WPVariables;
+namespace RichJenks\WPTemplates;
 
-class Plugin {
+trait Plugin {
 
 	/**
 	 * @var string Prefix for plugin objects
 	 */
 
-	protected $prefix = 'rj_vars';
+	protected $post_type = 'rj_vars';
 
 }
