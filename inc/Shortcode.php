@@ -1,4 +1,4 @@
-<?php
+<?php namespace RichJenks\WPSnippetses;
 
 /**
  * Shortcode
@@ -6,11 +6,7 @@
  * Shortcode for variables
  */
 
-namespace RichJenks\WPTemplates;
-
 class Shortcode {
-
-	use Plugin;
 
 	/**
 	 * __construct
@@ -22,7 +18,7 @@ class Shortcode {
 
 		// Register shortcode
 		add_action( 'init', function() {
-			add_shortcode( 'template', array( $this, 'shortcode' ) );
+			add_shortcode( 'snippet', array( $this, 'shortcode' ) );
 		} );
 
 	}
@@ -47,15 +43,26 @@ class Shortcode {
 		), $atts );
 
 		// Get content
-		$query = "SELECT post_content FROM $wpdb->posts WHERE ( ID = %d OR post_title = %s ) AND post_type = %s AND post_status = 'publish'";
-		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], $this->post_type );
-		$content = $wpdb->get_var( $prepared );
+		$query = "SELECT post_content
+			FROM $wpdb->posts
+			WHERE ( ID = %d OR post_title = %s )
+			AND post_type = %s
+			AND post_status = 'publish'
+			LIMIT 1";
+		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], 'snippetses' );
+		$return = $wpdb->get_var( $prepared );
 
 		// Inject variables from shortcode
-		foreach ( $atts as $key => $value ) $content = str_replace( '[' . $key . ']', $value, $content );
+		foreach ( $atts as $key => $value ) $return = str_replace( '[' . $key . ']', $value, $return );
+
+		// Inject content?
+		if ( $content ) $return = str_replace( '[content]', $content, $return );
 
 		// Make shortcodes work
-		return do_shortcode( $content );
+		$return = do_shortcode( $return );
+
+		// Return formatted
+		return wpautop( $return );
 
 	}
 

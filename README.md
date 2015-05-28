@@ -1,12 +1,14 @@
-# Content Templates
+# Snippetses
+
+*...because "snippets" was taken...*
 
 Create content templates, snippets or terms and inject variables into them.
 
 ## Usage
 
-- Go to `Admin > Templates > Add New`
+- Go to `Admin > Snippets > Add New`
 - Give it the title `Greeting` and the content `Hi [name]!`
-- Somewhere in your content, add `[template title="Greeting" name="Rich"]`
+- Somewhere in your content, add `[snippet title="Greeting" name="Rich"]`
     - The `title` refers to the title of the Variable
     - Alternatively, use `id` and provide the post ID
     - Other attributes refer to placeholders in the Variable's content
