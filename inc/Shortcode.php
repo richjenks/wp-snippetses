@@ -42,7 +42,10 @@ class Shortcode {
 			AND post_status = 'publish'
 			LIMIT 1";
 		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], 'snippetses' );
-		$return = $wpdb->get_var( $prepared );
+		$return   = $wpdb->get_var( $prepared );
+
+		// If post not found, no point continuing
+		if ( is_null( $return ) ) return;
 
 		// Make array of custom atts
 		$vars = $atts;
@@ -54,12 +57,12 @@ class Shortcode {
 		// Inject variables from shortcode
 		foreach ( $vars as $key => $value ) {
 			$pattern = "/{($key.*?)}/";
-			$return = preg_replace( $pattern, $value, $return );
+			$return  = preg_replace( $pattern, $value, $return );
 		}
 
 		// Check for unmached placeholders with default values
 		$pattern = "/{.*default=\"(.*?)\".*?}/";
-		$return = preg_replace( $pattern, '\1', $return );
+		$return  = preg_replace( $pattern, '\1', $return );
 
 		// Make shortcodes work
 		$return = do_shortcode( $return );
