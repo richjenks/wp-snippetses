@@ -54,23 +54,23 @@ class PostType {
 	 */
 
 	private function get_labels() {
-		$text_domain = 'richjenks_templates';
+		$text_domain = 'snippetses';
 		return array(
-			'name'               => _x( 'Snippets', 'post type general name', $text_domain ),
+			'name'               => _x( 'Snippetses', 'post type general name', $text_domain ),
 			'singular_name'      => _x( 'Snippet', 'post type singular name', $text_domain ),
-			'menu_name'          => _x( 'Snippets', 'admin menu', $text_domain ),
+			'menu_name'          => _x( 'Snippetses', 'admin menu', $text_domain ),
 			'name_admin_bar'     => _x( 'Snippet', 'add new on admin bar', $text_domain ),
 			'add_new'            => _x( 'Add New', 'Snippet', $text_domain ),
-			'all_items'          => __( 'All Snippets', $text_domain ),
+			'all_items'          => __( 'All Snippetses', $text_domain ),
 			'add_new_item'       => __( 'Add Snippet', $text_domain ),
 			'new_item'           => __( 'New Snippet', $text_domain ),
 			'edit_item'          => __( 'Edit Snippet', $text_domain ),
 			'view_item'          => __( 'View Snippet', $text_domain ),
-			'search_items'       => __( 'Search Snippets', $text_domain ),
+			'search_items'       => __( 'Search Snippetses', $text_domain ),
 			'parent'             => __( 'Parent Snippet', $text_domain ),
 			'parent_item_colon'  => __( 'Parent Snippet:', $text_domain ),
-			'not_found'          => __( 'No Snippets found.', $text_domain ),
-			'not_found_in_trash' => __( 'No Snippets found in Trash.', $text_domain ),
+			'not_found'          => __( 'No Snippetses found.', $text_domain ),
+			'not_found_in_trash' => __( 'No Snippetses found in Trash.', $text_domain ),
 		);
 	}
 
