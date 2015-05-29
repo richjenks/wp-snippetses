@@ -4,19 +4,14 @@
 
 Create snippets, content templates or terms and inject variables into them.
 
-## Usage
+## Basic Usage
 
-- Go to `Admin > Snippets > Add New`
-- Put `Hi [name]!` in the content and save
-- Note the Post ID from the URL
-- In another post, write `[snippet id="42" name="Rich"]`
-    - The `id` refers to the Post ID of the snippet
-    - Other attributes refer to placeholders in the Variable's content
-- View the content and you should see `Hi Rich!`
+1. Go to `Admin > Snippets > Add New`
+1. Put `Hi {name}!` in the content and save — note the ID in the URL!
+1. In another post, write `[snippet id="42" name="Rich"]`
+1. View the content and you should see `Hi Rich!`
 
-You can have any number of additional attributes and they can be called anything you like as long as they're lowercase.
-
-You can also use an enclosing shortcode (e.g. `[snippet id="42"]Hello, World![/snippet]`) to pass larger content (including other shortcodes!) to the `[content]` placeholder in the snippet.
+The `id` is the ID of the snippet and `name` will replace the `{name}` placeholder in the snippet.
 
 ## Use Cases
 
@@ -25,3 +20,37 @@ You can also use an enclosing shortcode (e.g. `[snippet id="42"]Hello, World![/s
 - Similar pricing structure repeated throughout site
 - Up-to-date phone number needs to be on several articles
 - Content templates injecting parts that need to change
+
+## Snippets Placeholders
+
+Snippet placeholders use the same syntax as shortcodes, except that they use braces (`{` & `}`, e.g. `{foo}`) instead of brackets (`[` & `]`),  and are replaced with the values passed in the shortcode.
+
+Enclosing shortcodes can be used to pass larger texts to the Snippet with the `{content}` placeholder, including other shortcodes. You can also set a `default` value in the placeholder in case a parameter isn't provided.
+
+See [Full Example](#full-example) below for examples of these features.
+
+## Shortcode Parameters
+
+- `id` or `title` can be used to get a Snippet
+- `inline` can be set to keep the Snippet on one line
+- All other parameters will replace placeholders
+- Anything inside an enclosing shortcode (e.g. `[shortcode]Content[/shortcode]` rather than `[shortcode]`) will replace the `{content}` placeholder
+
+## Full Example
+
+    Assume another plugin has the shortcode `[date]` which outputs the current date
+
+1. Create a Snippet as follows:
+
+    1. Title: `Favorite Colors`
+    1.  Content: `{first_color} & {second_color default="green"} {content}`
+
+1. In another post, add the content:
+
+    `Favorite colors: [snippet title="Favorite Colors" inline="yes" first_color="red"]as of [date][/snippet]`
+
+1. What will be shown:
+
+    Favorite colors: red & green as of 29<sup>th</sup> May 2015
+
+The only limitation is that a Snippet shortcode cannot be inside another Snippet shortcode (i.e. [self-nested](https://codex.wordpress.org/Shortcode_API#Limitations)) but this is a [limitation of WordPress' shortcode parser](https://core.trac.wordpress.org/ticket/14481)  rather than of this plugin.

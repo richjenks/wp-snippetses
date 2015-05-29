@@ -29,8 +29,9 @@ class Shortcode {
 
 		// Prepare array for query
 		$atts = array_merge( array(
-			'id'    => '',
-			'title' => '',
+			'id'     => '',
+			'title'  => '',
+			'inline' => false,
 		), $atts );
 
 		// Get content
@@ -43,17 +44,31 @@ class Shortcode {
 		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], 'snippetses' );
 		$return = $wpdb->get_var( $prepared );
 
-		// Inject variables from shortcode
-		foreach ( $atts as $key => $value ) $return = str_replace( '[' . $key . ']', $value, $return );
+		// Make array of custom atts
+		$vars = $atts;
+		unset( $vars['id'] );
+		unset( $vars['title'] );
+		unset( $vars['inline'] );
+		if ( $content) $vars['content'] = $content;
 
-		// Inject content?
-		if ( $content ) $return = str_replace( '[content]', $content, $return );
+		// Inject variables from shortcode
+		foreach ( $vars as $key => $value ) {
+			$pattern = "/{($key.*?)}/";
+			$return = preg_replace( $pattern, $value, $return );
+		}
+
+		// Check for unmached placeholders with default values
+		$pattern = "/{.*default=\"(.*?)\".*?}/";
+		$return = preg_replace( $pattern, '\1', $return );
 
 		// Make shortcodes work
 		$return = do_shortcode( $return );
 
+		// Inline content? (e.g. single var, not paragraphs)
+		if ( !$atts['inline'] ) $return = wpautop( $return );
+
 		// Return formatted
-		return wpautop( $return );
+		return $return;
 
 	}
 
