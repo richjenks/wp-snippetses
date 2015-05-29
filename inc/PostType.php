@@ -1,34 +1,19 @@
 <?php namespace RichJenks\WPSnippetses;
 
 /**
- * PostType
- *
  * Custom Post Type for Templates
  */
-
 class PostType {
 
 	/**
-	 * __construct
-	 *
-	 * Start the magic...
+	 * Register post type
 	 */
-
 	public function __construct() {
-
-		// Register post type
-		add_action( 'init', function() {
-			register_post_type( 'snippetses', $this->get_args() );
-		} );
-
-	}
+		add_action( 'init', function() { register_post_type( 'snippetses', $this->get_args() ); } ); }
 
 	/**
-	 * get_args
-	 *
 	 * @return array Hard-coded arguments for post type
 	 */
-
 	private function get_args() {
 		return array(
 			'labels'             => $this->get_labels(),
@@ -48,11 +33,8 @@ class PostType {
 	}
 
 	/**
-	 * get_labels
-	 *
 	 * @return array Hard-coded labels for post type
 	 */
-
 	private function get_labels() {
 		$text_domain = 'snippetses';
 		return array(

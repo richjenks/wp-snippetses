@@ -1,35 +1,26 @@
 <?php namespace RichJenks\WPSnippetses;
 
 /**
- * Shortcode
- *
  * Shortcode for variables
  */
-
 class Shortcode {
 
 	/**
-	 * __construct
-	 *
-	 * Start the magic...
+	 * Register shortcode
 	 */
-
 	public function __construct() {
-
-		// Register shortcode
-		add_action( 'init', function() {
-			add_shortcode( 'snippet', array( $this, 'shortcode' ) );
-		} );
-
+		add_action( 'init', function() { add_shortcode( 'snippet', array( $this, 'shortcode' ) ); } );
 	}
 
 	/**
-	 * shortcode
-	 *
 	 * Outputs content for shortcode
+	 *
+	 * @param array  $atts    Shortcode attributes
+	 * @param string $content Text inside enclosing shortcode
+	 *
+	 * @return string Snippet with variables injected
 	 */
-
-	public function shortcode( $atts = array(), $content = false ) {
+	public function shortcode( $atts = array(), $content = null ) {
 
 		global $wpdb;
 
