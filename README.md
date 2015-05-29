@@ -52,5 +52,3 @@ See [Full Example](#full-example) below for examples of these features.
 1. What will be shown:
 
     Favorite colors: red & green as of 29<sup>th</sup> May 2015
-
-The only limitation is that a Snippet shortcode cannot be inside another Snippet shortcode (i.e. [self-nested](https://codex.wordpress.org/Shortcode_API#Limitations)) but this is a [limitation of WordPress' shortcode parser](https://core.trac.wordpress.org/ticket/14481)  rather than of this plugin.
