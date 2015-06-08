@@ -59,7 +59,7 @@ class Shortcode {
 		}
 
 		// Check for unmached placeholders with default values
-		$pattern = "/{.*default=\"(.*?)\".*?}/";
+		$pattern = "/{.*?default=\"(.*?)\".*?}/";
 		$return  = preg_replace( $pattern, '\1', $return );
 
 		// Make shortcodes work
