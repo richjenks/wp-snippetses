@@ -52,7 +52,7 @@ class Shortcode {
 		unset( $vars['id'] );
 		unset( $vars['title'] );
 		unset( $vars['inline'] );
-		if ( $content) $vars['content'] = $content;
+		if ( $content ) $vars['content'] = $content;
 
 		// Inject variables from shortcode
 		foreach ( $vars as $key => $value ) {
