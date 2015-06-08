@@ -30,18 +30,17 @@ class Shortcode {
 		// Prepare array for query
 		$atts = array_merge( array(
 			'id'     => '',
-			'title'  => '',
 			'inline' => false,
 		), $atts );
 
 		// Get content
 		$query = "SELECT post_content
 			FROM $wpdb->posts
-			WHERE ( ID = %d OR post_title = %s )
+			WHERE ID = %d
 			AND post_type = %s
 			AND post_status = 'publish'
 			LIMIT 1";
-		$prepared = $wpdb->prepare( $query, $atts['id'], $atts['title'], 'snippetses' );
+		$prepared = $wpdb->prepare( $query, $atts['id'], 'snippetses' );
 		$return   = $wpdb->get_var( $prepared );
 
 		// If post not found, no point continuing
@@ -50,7 +49,6 @@ class Shortcode {
 		// Make array of custom atts
 		$vars = $atts;
 		unset( $vars['id'] );
-		unset( $vars['title'] );
 		unset( $vars['inline'] );
 		if ( $content ) $vars['content'] = $content;
 

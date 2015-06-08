@@ -31,7 +31,7 @@ See [Full Example](#full-example) below for examples of these features.
 
 ## Shortcode Parameters
 
-- `id` or `title` can be used to get a Snippet
+- `id` can be used to get a Snippet
 - `inline` can be set to keep the Snippet on one line
 - All other parameters will replace placeholders
 - Anything inside an enclosing shortcode (e.g. `[shortcode]Content[/shortcode]` rather than `[shortcode]`) will replace the `{content}` placeholder
@@ -43,11 +43,11 @@ See [Full Example](#full-example) below for examples of these features.
 1. Create a Snippet as follows:
 
     1. Title: `Favorite Colors`
-    1.  Content: `{first_color} & {second_color default="green"} {content}`
+    1. Content: `{first_color} & {second_color default="green"} {content}`
 
 1. In another post, add the content:
 
-    `Favorite colors: [snippet title="Favorite Colors" inline="yes" first_color="red"]as of [date][/snippet]`
+    `Favorite colors: [snippet id="42" inline="yes" first_color="red"]as of [date][/snippet]`
 
 1. What will be shown:
 
