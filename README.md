@@ -36,6 +36,14 @@ See [Full Example](#full-example) below for examples of these features.
 - All other parameters will replace placeholders
 - Anything inside an enclosing shortcode (e.g. `[shortcode]Content[/shortcode]` rather than `[shortcode]`) will replace the `{content}` placeholder
 
+## HTML
+
+You can pass HTML to shortcode parameters by replacing angles (`<` & `>`) with double braces (`{{` & `}}`) and replacing quotes (`"`) with double apostrophes (`''`). For example:
+
+```
+[snippet id="42" text="Here's a link: {{a href=''http://google.com''}}Google{{/a}}"]
+```
+
 ## Full Example
 
     Assume another plugin has the shortcode `[date]` which outputs the current date

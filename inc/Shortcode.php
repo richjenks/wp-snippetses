@@ -54,8 +54,16 @@ class Shortcode {
 
 		// Inject variables from shortcode
 		foreach ( $vars as $key => $value ) {
+
+			// Convert to HTML
+			$search  = array( '{{', '}}', "''" );
+			$replace = array( '<', '>', '"' );
+			$value   = str_replace( $search, $replace, $value );
+
+			// Inject value
 			$pattern = "/{($key.*?)}/";
 			$return  = preg_replace( $pattern, $value, $return );
+
 		}
 
 		// Check for unmached placeholders with default values
