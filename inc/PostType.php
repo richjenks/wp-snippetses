@@ -6,10 +6,18 @@
 class PostType {
 
 	/**
-	 * Register post type
+	 * Go!
 	 */
 	public function __construct() {
-		add_action( 'init', function() { register_post_type( 'snippetses', $this->get_args() ); } ); }
+
+		// Register post type
+		add_action( 'init', function() { register_post_type( 'snippetses', $this->get_args() ); } );
+
+		// Register shortcode column
+		add_filter( 'manage_edit-snippetses_columns', [ $this, 'register_shortcode_column' ] );
+		add_action( 'manage_snippetses_posts_custom_column', [ $this, 'manage_snippetses_columns' ], 10, 2 );
+
+	}
 
 	/**
 	 * @return array Hard-coded arguments for post type
@@ -54,6 +62,25 @@ class PostType {
 			'not_found'          => __( 'No Snippetses found.', $text_domain ),
 			'not_found_in_trash' => __( 'No Snippetses found in Trash.', $text_domain ),
 		);
+	}
+
+	/**
+	 * Adds a column in post list for each snippet's shortcode
+	 * Also hides date, because it's not needed
+	 */
+	public function register_shortcode_column( $gallery_columns ) {
+		unset( $gallery_columns[ 'date' ] );
+		$gallery_columns[ 'shortcode' ] = __( 'Shortcode' );
+		return $gallery_columns;
+	}
+
+	/**
+	 * Adds value to shortcode column in post list
+	 */
+	public function manage_snippetses_columns( $column, $id ) {
+		if ( $column === 'shortcode' ) {
+			echo '[snippet id="' . $id . '"]';
+		}
 	}
 
 }
